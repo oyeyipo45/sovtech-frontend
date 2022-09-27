@@ -2,22 +2,25 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/index.css';
 import Details from './views/Details';
-import People from './views/People';
+import Home from './views/Home';
 
-function App() {
+
+const App = () => {
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <div className='App'>
-          <header className='App-header'>
-            <Routes>
-              <Route path='/' element={<People />} />
-              <Route path='/details' element={<Details />} />
-            </Routes>
-          </header>
-        </div>
-      </BrowserRouter>
-    </div>
+   
+      <div className='App'>
+        <BrowserRouter>
+          <div className='App'>
+            <header className='App-header'>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/details/:id' element={<Details />} />
+              </Routes>
+            </header>
+          </div>
+        </BrowserRouter>
+      </div>
+   
   );
 }
 
