@@ -67,7 +67,7 @@ export const HomeWorldList = styled.div`
 const Home = () => {
   const location = useLocation();
 
-  let pageNumber = Number(location?.search?.split('=')[1]);
+  let pageNumber = Number(location?.search?.split('=')[1]) || 1;
 
   const { loading, data } = useGetPeople(pageNumber);
 
