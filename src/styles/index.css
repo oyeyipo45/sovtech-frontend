@@ -52,3 +52,14 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
+
+.link {
+   text-decoration : none;
+   color: white;
+   margin-bottom: 2rem;
+}
+
+.disabledd{
+    pointer-events: none;
+    cursor: default;
+}

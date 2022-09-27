@@ -1,56 +1,99 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
-import { PersonResponse, PageFilter } from '../@types';
+import { Person } from '../@types';
 import Loader from '../components/Loader';
+import styled from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
+import { useGetPeople } from '../hooks/getPeople';
+import Pagination from '../components/Pagination';
 
-
-const GET_PEOPLE = gql`
-  query People($filter: PageFilter) {
-    getPeople(filter: $filter) {
-      data {
-        name
-        height
-        mass
-        gender
-        homeworld
-      }
-    }
+export const Container = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding: 1.5rem 1rem;
+  margin-top: 2rem;
+  width: 13rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  @media only screen and (max-width: 600px) {
+    padding: 1.5rem 0.5rem;
+    margin-top: 1rem;
   }
 `;
 
-export const useGetPosts = (): any | undefined => {
-  let { loading, data } = useQuery<any, PageFilter>(GET_PEOPLE, { variables: { page: 3 } });
-  
-    return {loading, data :  data?.getPeople?.data};
-}
+export const Title = styled.h1`
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 8px;
+  color: #b26c10;
+  a {
+    color: #b26c10;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+`;
 
+export const SubTitle = styled.h1`
+  font-size: 14px;
+  margin: 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #b26c10;
+  opacity: 0.6;
+  @media only screen and (max-width: 600px) {
+    font-size: 12px;
+  }
+`;
+
+export const Row = styled.h2`
+  font-size: 14px;
+  font-weight: semi-bold;
+  margin: 0;
+  padding: 2px 0;
+  span {
+    font-weight: normal;
+    margin-left: 10px;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 12px;
+  }
+`;
+
+export const HomeWorldList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1.5rem;
+`;
 
 const Home = () => {
-  // let {loading,  data  } = useQuery<any, PageFilter>(GET_PEOPLE, { variables: { page: 3 } });
+  const location = useLocation();
 
-  const {loading,data: desData} = useGetPosts()
-  
+  let pageNumber = Number(location?.search?.split('=')[1]);
+
+  const { loading, data } = useGetPeople(pageNumber);
 
   return (
     <>
       {loading && <Loader />}
-      {desData &&
-        desData?.map((data: any, index: any) => (
-          <div key={index}>
-            <p>Name: {data.name}</p>
-            <p>
-              Gender: <span>{data.gender}</span>
-            </p>
-            <p>
-              Mass: <span>{data.mass}</span>
-            </p>
-            <p>
-              Height: <span>{data.height}</span>
-            </p>
-            <p>
-              Mass: <span>{data.mass}</span>
-            </p>
-          </div>
+      {data?.data.length > 0 && <Pagination count={data?.page?.total} page={pageNumber} />}
+      {data &&
+        data?.data?.map((person: Person, index: any) => (
+          <Link className='link' to={`/details/${person.name}`} key={index}>
+            <Container>
+              <Title>Name: {person.name}</Title>
+              <Title>
+                Gender: <span>{person.gender}</span>
+              </Title>
+              <Title>
+                Mass: <span>{person.mass}</span>
+              </Title>
+              <Title>
+                Height: <span>{person.height}</span>
+              </Title>
+              <Title>
+                Mass: <span>{person.mass}</span>
+              </Title>
+            </Container>
+          </Link>
         ))}
     </>
   );

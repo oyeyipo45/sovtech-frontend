@@ -35,7 +35,6 @@ const Loader = () => {
       <Centerloader>
         <Spinner />
         <br />
-        Loading ...
       </Centerloader>
     </Wrapper>
   );
