@@ -12,7 +12,7 @@ app.use(express.static('build'));
 
 isProduction &&
   app.get('*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, '../sovtech-frontend/build', 'index.html'));
+    response.sendFile(path.resolve(__dirname, '../sovt-frontend/build', 'index.html'));
   });
 
 

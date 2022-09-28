@@ -63,15 +63,15 @@ const Details = () => {
 
   return (
     <>
-      <div></div>
+      {data.length > 0 && <>
       <Button>
         <Link to={'/?page=1'} className='link'>
           Go To Home
         </Link>
       </Button>
-      <div>Details</div>
+      <div>Details</div></>}
       {loading && <Loader />}
-      {data &&
+      {data && 
         data?.map((person: Person, index: any) => (
           <Link className='link' to={`/details/${person.name}`} key={index}>
             <Container>
